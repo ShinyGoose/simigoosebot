@@ -11,13 +11,20 @@ class Commands(commands.Cog):
     # events
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Ready!')
+      await self.client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="for commands"))
+      print('Ready!')
 
     # commands
     #### PING ####
     @commands.command()
     async def ping(self, context):
-        await context.send(f"{round(self.client.latency * 1000)}ms")
+      
+        await context.send(f"""🏓Pong!\n\n```apache\n Ping is: {round(self.client.latency * 1000)}ms```""")
+    
+    #### PONG ####
+    @commands.command()
+    async def pong(self, context):
+        await context.send("🏓Ping!")
 
     #### READY! ####
     @commands.command()
@@ -69,7 +76,7 @@ class Commands(commands.Cog):
 
         await context.send(f'{rd.choice(stuff)}')
 
-    #### HONK ####
+    #### 8 BALL ####
     @commands.command(aliases=['8ball', 'eightball'])
     async def _8ball(self, context, *, question='no question'):
         answers = [
@@ -95,7 +102,21 @@ class Commands(commands.Cog):
             "Very doubtful."
         ]
 
-        await context.send(f'Q: {question}\nA: {rd.choice(answers)}')
+        # await context.send(f'Q: {question}\nA: {rd.choice(answers)}')
+
+        embed=discord.Embed() #title= Magic 8Ball, color=0xadff2f
+        # embed.description = f'Q: {question}\nA: {rd.choice(answers)}'
+        embed.title= 'Magic 8Ball'
+        embed.color= 0xadff2f
+
+        embed.add_field(name=f"Q: {question}", value=f"A: {rd.choice(answers)}", inline=False)
+
+        # context.message.author.avatar_url
+        embed.set_thumbnail(url="https://lh3.googleusercontent.com/proxy/w6LjTMHSVGBu70ajAArzcfHxesfConvnYpjjAiP3nEyAecl4cAy0V_cSkRRbaZYb3hwQQruroKuc_kqiRfE9BCQhrEUZtQhmAseJ")
+
+        embed.set_footer(text="the all knowing goose has answered")
+
+        await context.send(embed=embed)
 
 
 def setup(client):

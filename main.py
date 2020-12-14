@@ -3,6 +3,7 @@ import os
 import random
 from discord.ext import commands
 
+import server
 
 def get_token():
     with open('token.txt', 'r') as token:
@@ -12,7 +13,6 @@ def get_token():
 
 token = get_token()
 client = commands.Bot(command_prefix='.')
-
 
 #### LOAD & UNLOAD ####
 
@@ -36,5 +36,7 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-
+#Starts the server
+server.keep_alive()
+#Runs the bot
 client.run(token)
