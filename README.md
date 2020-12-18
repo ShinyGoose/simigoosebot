@@ -6,7 +6,9 @@
 because it's fun
 
 ```bash
-.honk
+.honk to honk
+.8ball question for question
+.pop for popping paper
 ```
 
 ## Usage

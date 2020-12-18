@@ -5,17 +5,9 @@ from discord.ext import commands
 
 import server
 
-def get_token():
-    with open('token.txt', 'r') as token:
-        lines = token.readlines()
-        return lines[0].strip()
-
-
-token = get_token()
 client = commands.Bot(command_prefix='.')
 
 #### LOAD & UNLOAD ####
-
 
 @client.command()
 async def load(context, extension):
@@ -39,4 +31,4 @@ for filename in os.listdir('./cogs'):
 #Starts the server
 server.keep_alive()
 #Runs the bot
-client.run(token)
+client.run(os.getenv('TOKEN'))

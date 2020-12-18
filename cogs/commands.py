@@ -1,5 +1,8 @@
 import discord
 import random as rd
+import math
+
+from lists import stuff, math_formulas
 from discord.ext import commands
 
 
@@ -31,6 +34,7 @@ class Commands(commands.Cog):
     async def bot(self, context):
         await context.send("Goose Bot is Ready!")
 
+
     #### HONK ####
     @commands.command()
     async def honk(self, context):
@@ -44,79 +48,58 @@ class Commands(commands.Cog):
     #### CLEAR ####
     @commands.command()
     async def clear(self, context, amount=5):
-        await context.channel.purge(limit=amount+1)
+      await context.channel.purge(limit=amount+1)
 
-    #### Chemestry ####
+    #### Chemistry ####
     @commands.command()
-    async def chemestry(self, context):
-        stuff = [
-            "2Na + F2 -> 2NaF",
-            "4SO2 + 2O2 -> 4SO3",
-            "Li2O +  H2O -> 2Li OH",
-            "2HCl + Mg(OH)2 -> MgCl2 + 2H2O",
-            "Ca + 2HNO3 -> Ca(NO3 ) 2 + H2",
-            "H2 + I2 -> 2HI",
-            "4Al +3O2 -> 2Al2O3",
-            "2N H 3 + H2 SO4 -> (NH4 ) SO4",
-            "2Na + 2H2O -> 2NaOH + H2",
-            "2H3PO4 + 6Na -> 2Na3PO4 + 3H2",
-            "Kalium reagiert mit Wasser zu Kaliumhydroxid und Wasserstoff",
-            "Magnesiumiodid reagiert mit Schwefelsäure  zu Magnesiumsulfat und Wasserstoffiodid",
-            "Calcium reagiert mit Sauerstoff zu Calciumoxid",
-            "Aluminium reagiert mit Brom zu Aluminiumbromid.",
-            "Chlorwasserstoff reagiert mit Calciumcarbonat zu Calciumchlorid, Kohlenstoffdioxid und Wasser",
-            "Sn2 and Sn1 reactions are not a clear-cut case one of the other. It's a spectrum. -Polarity is a continuum. There are very few molecules that you can say, this is polar and this is non-polar. Polarity is only meaningful in relation to something else. There are also about 4/5 measures of polarity that are determined by highly technical p-chem-y stuff. It's also different depending on whether you are looking at solubility or chromatography or what.",
-            "H-bonding. Don't even get me started. When I started my graduate studies my professor gave me an entire BOOK on hydrogen bonding. Two of my professors had a decades long friendly feud about whether or not certain interactions can be called a hydrogen bond. The IUPAC had a committee that met for YEARS to figure out what can and cannot be called hydrogen bonding. This actually goes for all intermolecular interactions.",
-            "Deoxyribonucleic acid:\nC15H31N3O13P2",
-            "H2O + Na2O2 + Ca(ClO)2 → O2 + NaCl + Ca(OH)2",
-            "H2O + Ca3N2 → NH3 + Ca(OH)2",
-            "Sn2 and Sn1 reactions are not a clear-cut case one of the other. It's a spectrum. -Polarity is a continuum. There are very few molecules that you can say, this is polar and this is non-polar. Polarity is only meaningful in relation to something else. There are also about 4/5 measures of polarity that are determined by highly technical p-chem-y stuff. It's also different depending on whether you are looking at solubility or chromatography or what.",
-            "Sn2 and Sn1 reactions are not a clear-cut case one of the other. It's a spectrum. -Polarity is a continuum. There are very few molecules that you can say, this is polar and this is non-polar. Polarity is only meaningful in relation to something else. There are also about 4/5 measures of polarity that are determined by highly technical p-chem-y stuff. It's also different depending on whether you are looking at solubility or chromatography or what."
-        ]
+    async def chemistry(self, context):
 
         await context.send(f'{rd.choice(stuff)}')
 
-    #### 8 BALL ####
-    @commands.command(aliases=['8ball', 'eightball'])
-    async def _8ball(self, context, *, question='no question'):
-        answers = [
-            "It is certain.",
-            "It is decidedly so.",
-            "Without a doubt.",
-            "Yes - definitely.",
-            "You may rely on it.",
-            "As I see it, yes.",
-            "Most likely.",
-            "Outlook good.",
-            "Yes.",
-            "Signs point to yes.",
-            "Reply hazy, try again.",
-            "Ask again later.",
-            "Better not tell you now.",
-            "Cannot predict now.",
-            "Concentrate and ask again.",
-            "Don't count on it.",
-            "My reply is no.",
-            "My sources say no.",
-            "Outlook not so good.",
-            "Very doubtful."
-        ]
+    
 
-        # await context.send(f'Q: {question}\nA: {rd.choice(answers)}')
-
-        embed=discord.Embed() #title= Magic 8Ball, color=0xadff2f
-        # embed.description = f'Q: {question}\nA: {rd.choice(answers)}'
-        embed.title= 'Magic 8Ball'
+    @commands.command(aliases=['maths', 'math', 'formulas', 'meth'])
+    async def _maths(self, context):
+        embed=discord.Embed()
+        embed.title= 'Mathematik'
         embed.color= 0xadff2f
 
-        embed.add_field(name=f"Q: {question}", value=f"A: {rd.choice(answers)}", inline=False)
-
-        # context.message.author.avatar_url
-        embed.set_thumbnail(url="https://lh3.googleusercontent.com/proxy/w6LjTMHSVGBu70ajAArzcfHxesfConvnYpjjAiP3nEyAecl4cAy0V_cSkRRbaZYb3hwQQruroKuc_kqiRfE9BCQhrEUZtQhmAseJ")
-
-        embed.set_footer(text="the all knowing goose has answered")
+        embed.add_field(name="Formule", value=math_formulas)
+        embed.set_footer(text="Gute Sache!")
 
         await context.send(embed=embed)
+
+
+    @commands.command(aliases=['delta', 'd'])
+    async def _delta(self, context, a, b, c):
+        # function that calculates x1, x2
+        def solve(a, b, c):
+          d = math.sqrt(abs(b**2 - 4*a*c)) # delta = b² - 4ac
+          x1 = (-b + d) / (2 * a)
+          x2 = (-b - d) / (2 * a)
+          return x1, x2, d
+
+        x1, x2, d= solve(int(a), int(b), int(c))
+
+        # displaying the result
+        embed=discord.Embed(title='∆ Quick Delta Calculator ∆', color=0x738adb)
+        embed.add_field(name='Input', value=f'a={a} b={b} c={c}', inline=True)
+        embed.add_field(name='Output', value=f'√∆ = {d} x1= {x1} x2= {x2}', inline=False)
+        embed.add_field(name='Result', value=f'{a} * (x- {x1}) * (x- {x2})', inline=False)
+        embed.set_footer(text="you're welcome")
+        await context.send(embed=embed)
+
+    @commands.command(aliases=['dformulas'])
+    async def _delta_formulas(self, context):
+        # displaying the result
+        embed=discord.Embed(title='∆ Delta Formulas ∆', color=0x738adb)
+        embed.add_field(name='Formulas', value='∆ = b² - 4ac \nx1 = (-b - √∆) / (2 * a)\nx2 = (-b + √∆) / (2 * a)\n p = a * (x - x1) * (x - x2)', inline=False)
+        embed.set_footer(text="you're welcome")
+        await context.send(embed=embed)
+
+    
+
+        
 
 
 def setup(client):
