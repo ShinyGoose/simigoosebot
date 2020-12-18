@@ -1,2 +1,2 @@
 language = "python3"
-run = "pip install discord\nclear\npython main.py"
+run = "clear\npython main.py"

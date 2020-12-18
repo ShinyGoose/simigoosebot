@@ -1,8 +1,29 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title></title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    
+    <meta name="author" content="CodingGoose" >
+		<meta name="keywords" content="discord,discord-bot,goose,goose-bot" >
+    <!-- <link href="imgs/favicon.ico" rel="icon"/> -->
+
+    <title>{% block title %}Goose Bot{% endblock%}</title>
+
+    <link href="{{ url_for('static',filename='style.css') }}" rel="stylesheet" />
+
+		{% block head %}{% endblock %}
+
   </head>
-  <body></body>
+  </head>
+  <body>
+    <main>
+      <h1>Goose Bot</h1>
+
+      <h2>
+        Lots of fun random commands, because yes!
+      </h2>
+        {% block body %}{% endblock %}
+    </main>
+  </body>
 </html>
